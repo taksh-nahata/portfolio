@@ -1,0 +1,17 @@
+#intro-container {
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #0a0a0a;
+
+}
+
+.brand-name {
+    transform-style: preserve-3d;
+    display: flex;
+    font-family: monospace;
+    font-size: 4rem;
+    color: #ffffff;
+}
