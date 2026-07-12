@@ -18,3 +18,25 @@ const totalHTML = words.map((word, wordIndex) => {
     return `<div class="word" style="animation-delay: ${wordDelay}s">${letterHTML}</div>`;
 }).join('');
 logoElement.innerHTML = totalHTML;
+
+const fullPhrase = "LEMME SHOW YOU WHAT I GOT";
+const stageContainer = document.getElementById("phrase-stage");
+const phraseWords = fullPhrase.split(' ');
+
+const phraseHTML = phraseWords.map((word, index) => {
+    let startPercent, endPercent;
+    
+    if (index === 0) {
+        // "LEMME" smashes in first (20% to 28% scroll)
+        startPercent = 20;
+        endPercent = 28;
+    } else {
+        // The rest of the words smash in sequentially AFTER the 90deg turn (starting at 40%)
+        startPercent = 40 + ((index - 1) * 6);
+        endPercent = startPercent + 6;
+    }
+    
+    return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
+}).join(' ');
+
+stageContainer.innerHTML = phraseHTML;

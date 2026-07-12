@@ -1,19 +1,70 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: #050505;
+    background-image:
+        radial-gradient(circle at 50% 50%, rgba(20, 30, 48, 0.7) 0%, rgba(5, 5, 5, 1) 80%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 60px 60px, 60px 60px;
+    background-attachment: fixed;
+}
+
 #intro-container {
-    perspective: 1000px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    height: 100vh;
+    position: relative;
+    height: 700vh;
     background-color: #0a0a0a;
 
 }
 
+.scroll-down-arrow {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border-left: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+    transform: translateX(-50%) rotate(-45deg);
+    opacity: 0;
+    animation:
+        revealArrow 0.03s 3.2s ease-in forwards,
+        bounceArrow 1s 3s infinite;
+}
+
+.arrow-wrapper {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    animation: arrowScrollOut linear forwards;
+    animation-timeline: scroll();
+    animation-range: 0% 20%;
+}
+
 .brand-name {
+    perspective: 1000px;
     transform-style: preserve-3d;
-    display: grid;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-family: monospace;
     font-size: 8rem;
     color: #ffffff;
+    margin: 0;
+    display: grid;
+    text-align: center;
+    animation: scrollOut linear forwards;
+    animation-timeline: scroll();
+    animation-range: 0% 20%;
 }
 
 .letter {
@@ -25,7 +76,42 @@
 .word {
     display: inline-block;
     animation: slideInWord 1s ease-out forwards;
-    margin-left: 20px;
+}
+
+#phrase-stage {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: 6rem;
+    color: #ffffff;
+    animation: panTrack linear forwards;
+    animation-timeline: scroll();
+}
+
+#camera-stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: stageChoreography linear forwards;
+    animation-timeline: scroll();
+}
+
+.smash-word {
+    display: inline-block;
+    margin: 0 15px; 
+    opacity: 0;
+    transform: scale(5) translateZ(500px);
+    text-shadow: 0 0 30px rgba(214, 27, 70, 0.6), 0 0 60px rgba(0, 240, 255, 0.2);
+    animation: smashWord linear forwards;
+    animation-timeline: scroll();
 }
 
 @keyframes spinInLetters {
@@ -45,5 +131,118 @@
     }
     100% {
         transform: translateX(0);
+    }
+}
+
+@keyframes bounceArrow {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0) rotate(-45deg);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px) rotate(-45deg);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px) rotate(-45deg);
+    }
+}
+
+@keyframes revealArrow {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scrollOut {
+    to {
+        transform: translate(-50%,-150%);
+        opacity: 0;
+    }
+}
+
+@keyframes arrowScrollOut {
+    to {
+        transform: translateX(-50%) translateY(-150%);
+        opacity: 0;
+    }
+}
+
+@keyframes smashWord {
+    0% {
+        transform: scale(5) translateZ(500px);
+        opacity: 0;
+        filter: blur(16px);
+    }
+    60% {
+        filter: blur(4px);
+    }
+    100% {
+        transform: scale(1) translateZ(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
+}
+@keyframes panTrack {
+    /* 0% to 40%: Shift right by 38% so LEMME sits in the dead center! */
+    0%, 40% {
+        transform: translateX(38%);
+    }
+    /* SHOW smashes (40%-46%) -> Slide left to center LEMME SHOW */
+    46% {
+        transform: translateX(26%);
+    }
+    /* YOU smashes (46%-52%) -> Slide left to center LEMME SHOW YOU */
+    52% {
+        transform: translateX(15%);
+    }
+    /* WHAT smashes (52%-58%) */
+    58% {
+        transform: translateX(6%);
+    }
+    /* I smashes (58%-64%) */
+    64% {
+        transform: translateX(-1%);
+    }
+    /* GOT smashes (64%-70%) -> Whole 6-word sentence centered! */
+    70%, 100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes stageChoreography {
+    0%, 19% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.8);
+    }
+    20%, 28% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1.8);
+    }
+    38%, 40% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-90deg) scale(1.8);
+    }
+    46% {
+        transform: translate(-50%, -50%) rotate(-90deg) scale(1.2);
+    }
+    52% {
+        transform: translate(-50%, -50%) rotate(-90deg) scale(0.8);
+    }
+    58% {
+        transform: translate(-50%, -50%) rotate(-90deg) scale(0.64);
+    }
+    64% {
+        transform: translate(-50%, -50%) rotate(-90deg) scale(0.55);
+    }
+    70% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-90deg) scale(0.55);
+    }
+    84%, 90% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-360deg) scale(1);
+    }
+    91%,100% {
+        opacity: 0;
+        transform: translateX(150%) scale(1);
     }
 }
