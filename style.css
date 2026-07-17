@@ -16,7 +16,12 @@ body {
     position: relative;
     height: 700vh;
     background-color: #0a0a0a;
+}
 
+#about-container {
+    position: relative;
+    height: 1800vh;
+    background-color: #0a0a0a;
 }
 
 .scroll-down-arrow {
@@ -32,6 +37,22 @@ body {
     animation:
         revealArrow 0.03s 3.2s ease-in forwards,
         bounceArrow 1s 3s infinite;
+}
+
+.scroll-down-arrow-about {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    border-left: 3px solid #ffffff;
+    border-bottom: 3px solid #ffffff;
+    transform: translateX(-50%) rotate(-45deg);
+    opacity: 0;
+    animation:
+        revealArrow 0.03s 3.2s ease-in forwards,
+        bounceArrow 1s 3s infinite;
+    animation-delay: 4.7s;
 }
 
 .arrow-wrapper {
@@ -70,25 +91,12 @@ body {
 .letter {
     display: inline-block;
     animation: spinInLetters 1s ease-out forwards;
-    opacity: 0; /* Starts out with letters staying invisible and then they become visible after the animation is completed*/
+    opacity: 0;
 }
 
 .word {
     display: inline-block;
     animation: slideInWord 1s ease-out forwards;
-}
-
-#phrase-stage {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    white-space: nowrap;
-    font-family: monospace;
-    font-size: 6rem;
-    color: #ffffff;
-    animation: panTrack linear forwards;
-    animation-timeline: scroll();
 }
 
 #camera-stage {
@@ -97,10 +105,90 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
+    z-index: 5;
     animation: stageChoreography linear forwards;
+    animation-timeline: scroll();
+}
+
+#camera-stage-about {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+    animation: stageChoreographyAbout linear forwards;
+    animation-timeline: scroll();
+}
+
+#camera-stage-guess {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 5;
+    animation: stageChoreographyGuess linear forwards;
+    animation-timeline: scroll();
+}
+
+#phrase-stage {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: 6rem;
+    color: #ffffff;
+    pointer-events: auto;
+    animation: panTrackAbout linear forwards;
+    animation-timeline: scroll();
+}
+
+#phrase-stage-about {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: 6rem;
+    color: #ffffff;
+    pointer-events: auto;
+    animation: panTrackAbout linear forwards;
+    animation-timeline: scroll();
+}
+
+#phrase-stage-guess {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    white-space: nowrap;
+    font-family: monospace;
+    font-size: 6rem;
+    color: #ffffff;
+    pointer-events: auto;
+    animation: panTrackGuess linear forwards;
     animation-timeline: scroll();
 }
 
@@ -113,6 +201,196 @@ body {
     animation: smashWord linear forwards;
     animation-timeline: scroll();
 }
+
+#terminal-stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.terminal-window {
+    position: absolute;
+    width: 90%;
+    max-width: 800px;
+    background-color: rgba(12, 12, 12, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(214, 27, 70, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: monospace;
+    backdrop-filter: blur(10px);
+    pointer-events: auto;
+    animation: terminalChoreography linear forwards;
+    animation-timeline: scroll();
+}
+
+.terminal-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: #1a1a1a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.window-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.dot.red { background-color: #ff5f56; }
+.dot.yellow { background-color: #ffbd2e; }
+.dot.green { background-color: #27c93f; }
+
+.terminal-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+}
+
+.terminal-body {
+    padding: 20px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+.text-muted { color: #666; }
+.text-accent { color: #d61b46; text-shadow: 0 0 10px rgba(214, 27, 70, 0.3); }
+.text-cyan { color: #00f0ff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+
+.terminal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px 20px;
+    background-color: rgba(20, 20, 20, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-btn {
+    background-color: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    clip-path: polygon(7% 0%, 93% 0%, 100% 50%, 93% 100%, 7% 100%, 0% 50%);
+}
+
+.terminal-btn:hover {
+    background-color: #d61b46;
+    color: #ffffff;
+    border-color: #d61b46;
+    box-shadow: 0 0 15px rgba(214, 27, 70, 0.4);
+    transform: translateY(-2px);
+}
+
+.terminal-status {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+    color: #666;
+    font-family: monospace;
+    min-height: 1.2rem;
+    background-color: rgba(20, 20, 20, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+    transition: all 0.2s ease;
+}
+
+.terminal-input-row {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #0c0c0c;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.prompt {
+    color: #27c93f;
+    font-weight: bold;
+}
+
+#terminal-input {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 1rem;
+    outline: none;
+}
+
+.aboutSubHeader {
+    font-size: 1.7rem;
+    color: #d61b46;
+    margin-left: 77%;
+    margin-top: 250px;
+    font-family: monospace;
+    display: inline-block;
+    opacity: 0;
+    transform: rotate(-36deg) scale(5) translateZ(500px);
+    text-shadow: 0 0 30px rgba(214, 27, 70, 0.6), 0 0 60px rgba(0, 240, 255, 0.2);
+    animation: smashWordRotated 0.9s linear 4s forwards;
+}
+
+#formal-greeting {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 6;
+    pointer-events: none;
+}
+
+.greeting-line {
+    font-family: monospace;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin: 0;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: lineFadeInOut linear forwards;
+    animation-timeline: scroll();
+}
+
+.line-1 { animation-range: 80% 90%; }
+.line-2 { animation-range: 83% 93%; }
+.line-3 { animation-range: 86% 98%; font-size: 4rem; color: #00f0ff; text-shadow: 0 0 20px rgba(0, 240, 255, 0.4); }
+
+/* --- ANIMATION KEYFRAMES --- */
 
 @keyframes spinInLetters {
     0% {
@@ -154,7 +432,7 @@ body {
 
 @keyframes scrollOut {
     to {
-        transform: translate(-50%,-150%);
+        transform: translate(-50%, -150%);
         opacity: 0;
     }
 }
@@ -181,29 +459,67 @@ body {
         filter: blur(0px);
     }
 }
+
+@keyframes smashWordRotated {
+    0% {
+        transform: rotate(-36deg) scale(5) translateZ(500px);
+        opacity: 0;
+        filter: blur(16px);
+    }
+    60% {
+        filter: blur(4px);
+    }
+    100% {
+        transform: rotate(-36deg) scale(1) translateZ(0);
+        opacity: 1;
+        filter: blur(0px);
+    }
+}
+
 @keyframes panTrack {
-    /* 0% to 40%: Shift right by 38% so LEMME sits in the dead center! */
     0%, 40% {
         transform: translateX(38%);
     }
-    /* SHOW smashes (40%-46%) -> Slide left to center LEMME SHOW */
     46% {
         transform: translateX(26%);
     }
-    /* YOU smashes (46%-52%) -> Slide left to center LEMME SHOW YOU */
     52% {
         transform: translateX(15%);
     }
-    /* WHAT smashes (52%-58%) */
     58% {
         transform: translateX(6%);
     }
-    /* I smashes (58%-64%) */
     64% {
         transform: translateX(-1%);
     }
-    /* GOT smashes (64%-70%) -> Whole 6-word sentence centered! */
     70%, 100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes panTrackAbout {
+    0%, 15% { transform: translateX(44%); }
+    20%     { transform: translateX(38%); }
+    24%     { transform: translateX(32%); }
+    28%     { transform: translateX(26%); }
+    32%     { transform: translateX(20%); }
+    36%     { transform: translateX(14%); }
+    40%     { transform: translateX(8%); }
+    44%     { transform: translateX(4%); }
+    48%, 100% { transform: translateX(0%); }
+}
+
+@keyframes panTrackGuess {
+    0%, 56% {
+        transform: translateX(30%);
+    }
+    61% {
+        transform: translateX(18%);
+    }
+    66% {
+        transform: translateX(8%);
+    }
+    71%, 100% {
         transform: translateX(0%);
     }
 }
@@ -221,18 +537,10 @@ body {
         opacity: 1;
         transform: translate(-50%, -50%) rotate(-90deg) scale(1.8);
     }
-    46% {
-        transform: translate(-50%, -50%) rotate(-90deg) scale(1.2);
-    }
-    52% {
-        transform: translate(-50%, -50%) rotate(-90deg) scale(0.8);
-    }
-    58% {
-        transform: translate(-50%, -50%) rotate(-90deg) scale(0.64);
-    }
-    64% {
-        transform: translate(-50%, -50%) rotate(-90deg) scale(0.55);
-    }
+    46% { transform: translate(-50%, -50%) rotate(-90deg) scale(1.2); }
+    52% { transform: translate(-50%, -50%) rotate(-90deg) scale(0.8); }
+    58% { transform: translate(-50%, -50%) rotate(-90deg) scale(0.64); }
+    64% { transform: translate(-50%, -50%) rotate(-90deg) scale(0.55); }
     70% {
         opacity: 1;
         transform: translate(-50%, -50%) rotate(-90deg) scale(0.55);
@@ -241,8 +549,71 @@ body {
         opacity: 1;
         transform: translate(-50%, -50%) rotate(-360deg) scale(1);
     }
-    91%,100% {
+    91%, 100% {
         opacity: 0;
-        transform: translateX(150%) scale(1);
+        transform: translate(150%, -50%) rotate(-360deg) scale(1);
+    }
+}
+
+@keyframes stageChoreographyAbout {
+    0%, 14% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.8);
+    }
+    15%, 20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.8);
+    }
+    24% { transform: translate(-50%, -50%) scale(1.5); }
+    28% { transform: translate(-50%, -50%) scale(1.3); }
+    32% { transform: translate(-50%, -50%) scale(1.1); }
+    36% { transform: translate(-50%, -50%) scale(0.9); }
+    40% { transform: translate(-50%, -50%) scale(0.75); }
+    44% { transform: translate(-50%, -50%) scale(0.65); }
+    48%, 52% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+    55%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+}
+
+@keyframes stageChoreographyGuess {
+    0%, 55% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.8);
+    }
+    56%, 62% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.8);
+    }
+    67% { transform: translate(-50%, -50%) scale(1.3); }
+    72%, 76% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+    79%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+}
+
+@keyframes lineFadeInOut {
+    0%   { opacity: 0; transform: translateY(30px); }
+    15%  { opacity: 1; transform: translateY(0px); }
+    85%  { opacity: 1; transform: translateY(0px); }
+    100% { opacity: 0; transform: translateY(-30px); }
+}
+
+@keyframes terminalChoreography {
+    0%, 90% {
+        opacity: 0;
+        transform: translateX(-150vw);
+    }
+    98%, 100% {
+        opacity: 1;
+        transform: translateX(0);
     }
 }

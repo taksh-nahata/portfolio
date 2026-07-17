@@ -13,9 +13,44 @@
             <span class="scroll-down-arrow"></span>
         </div>
     </div>
+    
     <div id="camera-stage">
         <div id="phrase-stage"></div>
     </div>
+
+    <div id="terminal-stage">
+        <div id="terminal-window" class="terminal-window">
+            <div class="terminal-header">
+                <div class="window-buttons">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="terminal-title">guest@taksh-nahata:~</div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="output-line">Welcome to my grounds! This system has been specifically initialized for you, so do what you must!</div>
+                <div class="output-line text-muted">Type a command below or click any quick-actions to explore and find out more about yours truly!</div>
+                <br>
+            </div>
+            <div class="btn-info">
+                
+            </div>
+            <div class="terminal-actions">
+                <button class="terminal-btn" onmouseenter="showTip('Opens my full-scale background biography page')" onmouseleave="hideTip(this)" onclick="runCommand('about')">cat about_me.txt</button>
+                <button class="terminal-btn" onmouseenter="showTip('Lists my projects')" onmouseleave="hideTip(this)" onclick="runCommand('projects')">ls projects</button>
+                <button class="terminal-btn" onmouseenter="showTip('Displays my skills')" onmouseleave="hideTip(this)" onclick="runCommand('skills')">npm run skills</button>
+                <button class="terminal-btn" onmouseenter="showTip('Shows my contact information')" onmouseleave="hideTip(this)" onclick="runCommand('contact')">cat contact.txt</button>
+                <button class="terminal-btn" onmouseenter="showTip('Clears the terminal')" onmouseleave="hideTip(this)" onclick="runCommand('clear')">clear</button>
+            </div>
+            <div id="terminal-status" class="terminal-status">The terminal is ready. Hover over a command to view details...</div>
+            <div class="terminal-input-row">
+                <span class="prompt">guest@taksh-nahata:~$&nbsp;</span>
+                <input type="text" id="terminal-input" placeholder="Type a command or help for more info..." autocomplete="off">
+            </div>                
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
