@@ -32,22 +32,22 @@ const firstPhraseWords = firstPhrase.split(' ');
 const secondPhraseWords = secondPhrase.split(' ');
 
 const firstPhraseHTML = firstPhraseWords.map((word, index) => {
-    const startPercent = 18 + (index * 3);
-    const endPercent = startPercent + 3;
+    const startPercent = 12 + (index * 7);
+    const endPercent = startPercent + 7;
     return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
 }).join(' ');
 
 stageContainer.innerHTML = firstPhraseHTML;
 
 const secondPhraseHTML = secondPhraseWords.map((word, index) => {
-    const startPercent = 52 + (index * 3); // Synced to exactly 3% steps!
-    const endPercent = startPercent + 3;
+    const startPercent = 12 + (index * 10);
+    const endPercent = startPercent + 10;
     return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
 }).join(' ');
 
 stageContainerGuess.innerHTML = secondPhraseHTML;
 
-// SCRIPT FOR HANDLING PHOTO POUR
+// SCRIPT FOR HANDLING PHOTO GRID ANIMATION AND MEDIA FILES
 const rawFiles = [
     {type: 'img', src: 'https://res.cloudinary.com/gxkyclnt/image/upload/v1784333952/aabbd7a4-60c1-435f-ad81-f4c498a314d5_higygp.jpg'},
     {type: 'img', src: 'https://res.cloudinary.com/gxkyclnt/image/upload/v1784333952/IMG_20260413_213746_jopfgb.heic'},
@@ -113,23 +113,28 @@ const mediaFiles = rawFiles.map(file => {
     } else {
         return {
             type: 'video',
-            src: file.src.replace('/upload/', '/upload/q_auto,w_600/')
+            src: file.src.replace('/upload/', '/upload/q_auto,w_600,du_9/')
         };
     }
 });
 
+for (let i = mediaFiles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [mediaFiles[i], mediaFiles[j]] = [mediaFiles[j], mediaFiles[i]];
+}
+
 const grid = document.getElementById('photo-grid');
+
 if (grid) {
+    const sizes = ['span-1', 'span-1', 'span-1', 'span-1','span-col-2', 'span-row-2','span-row-2', 'span-2x2'];
+
     mediaFiles.forEach((file, index) => {
         const card = document.createElement('div');
-        card.className = `photo-card`;
+        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+        card.className = `photo-card ${randomSize}`;
 
-        card.style.top = `${Math.random() * 70}%`;
-        card.style.left = `${Math.random() * 75}%`;
-        card.style.setProperty('--rot', `${(Math.random() - 0.5) * 40}deg`);
-
-        const startRange = 84 + (index * 0.25);
-        card.style.animationRange = `${startRange}% ${startRange + 6}%`;
+        const startRange = 10 + (index * 0.8);
+        card.style.setProperty('animation-range', `${startRange}% ${startRange + 10}%`);
 
         if (file.type === 'img') {
             card.innerHTML = `<img src="${file.src}" loading="lazy" alt="Taksh">`;
@@ -138,4 +143,245 @@ if (grid) {
         }
         grid.appendChild(card);
     });
+
+    setTimeout(() => {
+        let isJagged = true;
+
+        while (isJagged) {
+            const cards = Array.from(grid.querySelectorAll('.photo-card'));
+            if (cards.length === 0) break;
+
+            const bottoms = cards.map(c => Math.round(c.offsetTop + c.offsetHeight));
+            const maxBottom = Math.max(...bottoms);
+
+            const lowestCards = cards.filter(c => Math.round(c.offsetTop + c.offsetHeight) >= maxBottom -5);
+            let totalWidthOfLowestRow = lowestCards.reduce((sum, card) => sum + card.offsetWidth, 0);
+            totalWidthOfLowestRow += (lowestCards.length - 1) * 6;
+
+            const gridContentWidth = grid.clientWidth - 12;
+
+            if (gridContentWidth - totalWidthOfLowestRow > 20) {
+                lowestCards.forEach(card => card.remove());
+            } else {
+                isJagged = false;
+            }
+        }
+    }, 500);
 }
+
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+function getSectionProgress(sectionElement) {
+    if (!sectionElement) return 0;
+    const rect = sectionElement.getBoundingClientRect();
+    const scrollHeight = sectionElement.offsetHeight - window.innerHeight;
+    if (scrollHeight <= 0) return 0;
+    const progress = -rect.top /scrollHeight;
+    return clamp(progress, 0, 1);
+}
+
+
+
+// SCRIPT FOR HANDLING SEARCH QUERY ANIMATION, RESPONSE, AND COMMENTARY
+const act5Wrapper = document.getElementById('act-5-wrapper');
+const aiSearchStage = document.getElementById('ai-search-stage');
+const searchGlow = document.querySelector('.search-glow');
+const aiCardGlow = document.querySelector('.ai-card-glow');
+const typingText = document.querySelector('.typing-text-wrapper');
+const aiLines = Array.from(document.querySelectorAll('.ai-line'));
+const aiCommentary = document.querySelector('.ai-commentary');
+const typingFullText = typingText ? typingText.textContent.trim() : '';
+
+if (typingText) {
+    typingText.textContent = '';
+}
+
+const aiSequenceNodes = [searchGlow, aiCardGlow, typingText, ...aiLines, aiCommentary].filter(Boolean);
+aiSequenceNodes.forEach(node => {
+    node.style.animation = 'none';
+    node.style.transition = 'none';
+});
+
+
+function getScrollProgress() {
+    const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    return clamp(window.scrollY / maxScroll, 0, 1);
+}
+
+function applyAiSequence() {
+    const progress = getSectionProgress(act5Wrapper);
+
+    if (aiSearchStage) {
+        aiSearchStage.style.opacity = '1';
+    }
+
+    if (searchGlow) {
+        const glowProgress = clamp((progress - 0.05) / 0.15, 0, 1);
+        searchGlow.style.opacity = glowProgress.toFixed(3);
+        searchGlow.style.transform = `translateY(${20 * (1 - glowProgress)}px)`;
+        searchGlow.style.filter = `drop-shadow(0 0 ${18 * glowProgress}px rgba(0, 240, 255, 0.35))`;
+    }
+
+    if (typingText) {
+        const typingProgress = clamp((progress - 0.2) / 0.2, 0, 1);
+        const typedCharacters = Math.floor(typingProgress * typingFullText.length);
+        typingText.textContent = typingFullText.slice(0, typedCharacters);
+        typingText.style.opacity = '1';
+    }
+    
+
+    if (aiCardGlow) {
+        const cardProgress = clamp((progress - 0.42) / 0.15, 0, 1);
+        aiCardGlow.style.opacity = cardProgress.toFixed(3);
+        aiCardGlow.style.transform = `translateY(${20 * (1 - cardProgress)}px)`;
+        aiCardGlow.style.filter = `drop-shadow(0 0 ${18 * cardProgress}px rgba(168, 199, 250, 0.25))`;
+    }
+
+    const revealStarts = [0.58, 0.66, 0.74, 0.82];
+    const revealEnds   = [0.66, 0.74, 0.82, 0.90];
+    const revealNodes  = [...aiLines, aiCommentary].filter(Boolean);
+
+    revealNodes.forEach((node, index) => {
+        const revealProgress = clamp((progress - revealStarts[index]) / (revealEnds[index] - revealStarts[index]), 0, 1);
+        node.style.opacity = revealProgress.toFixed(3);
+        node.style.transform = `translateY(${10 * (1 - revealProgress)}px)`;
+        node.style.backgroundPosition = `${100 - (revealProgress * 100)}% 0`;
+    });
+}
+
+let aiFrame = null;
+function scheduleAiSequenceUpdate() {
+    if (aiFrame !== null) {
+        return;
+    }
+
+    aiFrame = window.requestAnimationFrame(() => {
+        aiFrame = null;
+        applyAiSequence();
+    });
+}
+
+window.addEventListener('scroll', scheduleAiSequenceUpdate, { passive: true });
+window.addEventListener('resize', scheduleAiSequenceUpdate);
+applyAiSequence();
+
+// SCRIPT FOR ANIMATING THE PHRASE "BUT HOW DID I GET HERE?"
+const bridgePhase = "BUT HOW DID I GET HERE?";
+const stageContaierBridge = document.getElementById("phrase-stage-bridge");
+const bridgeWords = bridgePhase.split(' ');
+
+const bridgeHTML = bridgeWords.map((word, index) => {
+    const startPercent = 15 + (index * 4);
+    const endPercent = startPercent + 3;
+    return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
+}).join(' ');
+
+stageContaierBridge.innerHTML = bridgeHTML;
+
+// SCRIPT FOR ANIMATING TIMELINE ITEMS
+const squigglyPath = document.getElementById('squiggly-path');
+if (squigglyPath) {
+    const pathLength = squigglyPath.getTotalLength();
+    squigglyPath.style.strokeDasharray = pathLength;
+    squigglyPath.style.strokeDashoffset = pathLength;
+    function drawSquiggleOnScroll() {
+        const timelineEl = document.getElementById('timeline');
+        if (!timelineEl) return;
+        const rect = timelineEl.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const sectionHeight = rect.height;
+        const scrollDistance = viewportHeight - rect.top;
+        let scrollPercentage = scrollDistance / sectionHeight;
+        scrollPercentage = Math.min(Math.max(scrollPercentage, 0), 1);
+        const drawLength = pathLength * scrollPercentage;
+        squigglyPath.style.strokeDashoffset = pathLength - drawLength;
+    }
+    window.addEventListener('scroll', drawSquiggleOnScroll);
+    drawSquiggleOnScroll();
+}
+
+const timelineItems = document.querySelectorAll('.timeline-item');
+if (timelineItems.length > 0) {
+    const itemObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+    timelineItems.forEach(item => itemObserver.observe(item));
+}
+
+// 3. ZOOM-OUT 90° ROTATION FINALE SCRIPT
+const mainTimeline = document.getElementById('main-timeline');
+const act7Wrapper = document.getElementById('act-7-wrapper');
+const finaleSpace = document.getElementById('finale-scroll-space');
+
+let cachedTimelineHeight = 0;
+
+function handleZoomOutRotation() {
+    if (!mainTimeline || !act7Wrapper || !finaleSpace) return;
+    
+    // Cache the initial height so the progress calculation is immune to dynamic layout changes!
+    if (cachedTimelineHeight === 0) {
+        cachedTimelineHeight = mainTimeline.offsetHeight;
+    }
+    
+    const act7Rect = act7Wrapper.getBoundingClientRect();
+    const windowH = window.innerHeight;
+    
+    // The scroll position where the user reaches the bottom of the timeline
+    const startFinaleTop = windowH - cachedTimelineHeight;
+    
+    // How far have we scrolled past this point?
+    const pixelsPastTimeline = startFinaleTop - act7Rect.top;
+    
+    // Total distance of the finale is 300vh
+    const scrollDistance = windowH * 3;
+    
+    let progress = pixelsPastTimeline / scrollDistance;
+    progress = Math.max(0, Math.min(1, progress));
+    
+    // Update cached height ONLY when safely at progress 0, 
+    // to adapt to image loading but ignore finale layout shifts.
+    if (progress === 0 && !mainTimeline.classList.contains('rotated-finale')) {
+        cachedTimelineHeight = mainTimeline.offsetHeight;
+    }
+    
+    // 1. Rotate -90deg smoothly
+    const angle = progress * -90;
+    
+    // Now we can safely read the dynamic expanding height for visual transforms,
+    // because it doesn't feed back into the progress calculation!
+    const actualHeight = mainTimeline.offsetHeight;
+    
+    // 2. Scale down so the entirely expanded timeline STILL fits horizontally!
+    const targetScale = (window.innerWidth * 0.85) / actualHeight;
+    const minScale = Math.min(1, targetScale);
+    const scale = 1 + (minScale - 1) * progress;
+    
+    // 3. Keep the timeline perfectly centered vertically on screen!
+    // The top of mainTimeline is exactly act7Rect.top.
+    const currentNaturalCenterY = act7Rect.top + (actualHeight / 2);
+    const targetCenterY = windowH / 2;
+    
+    const requiredTranslateY = targetCenterY - currentNaturalCenterY;
+    
+    // Linear translation perfectly counters linear native scrolling
+    const translateY = progress * requiredTranslateY;
+    
+    mainTimeline.style.transform = `translateY(${translateY}px) rotate(${angle}deg) scale(${scale})`;
+    mainTimeline.style.setProperty('--finale-progress', progress);
+    
+    if (progress > 0.05) {
+        mainTimeline.classList.add('rotated-finale');
+    } else {
+        mainTimeline.classList.remove('rotated-finale');
+    }
+}
+window.addEventListener('scroll', handleZoomOutRotation, { passive: true });
