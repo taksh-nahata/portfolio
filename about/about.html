@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me</title>
     <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="about.css">
 </head>
 <body>
 
-    <section class="act-wrapper" id="act-0-wrapper" style="height: 700vh;">
+    <section class="act-wrapper" id="act-0-wrapper" style="height: 600vh;">
         <div class="sticky-stage">
             <div id="about-container">
                 <h1 class="brand-name about" id="aboutHeader"></h1>
-                <h3 class="aboutSubHeader" id="aboutSubHeader">THAT'S ME!</h3>
                 <div class="arrow-wrapper about">
                     <span class="scroll-down-arrow-about"></span>
                 </div>
@@ -24,24 +24,6 @@
         <div class="sticky-stage">
             <div id="camera-stage-about">
                 <div id="phrase-stage-about"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="act-wrapper" id="act-2-wrapper" style="height: 500vh;">
-        <div class="sticky-stage">
-            <div id="camera-stage-guess">
-                <div id="phrase-stage-guess"></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="act-wrapper" id="act-3-wrapper" style="height: 600vh;">
-        <div class="sticky-stage">
-            <div id="formal-greeting">
-                <p class="greeting-line line-1">IF YOU'VE STAYED THIS LONG,</p>
-                <p class="greeting-line line-2">THEN I SHOULD PROBABLY FORMALLY INTRODUCE MYSELF</p>
-                <p class="greeting-line line-3">SO...</p>
             </div>
         </div>
     </section>
@@ -243,9 +225,53 @@
                 </div>
             </section>
             
-            <div id="finale-scroll-space" style="height: 300vh; width: 100%;"></div>
+            <div id="finale-scroll-space" style="height: 600vh; width: 100%;"></div>
     </section>
 
+    <section class="act-wrapper" id="act-8-wrapper" style="height: 800vh;">
+        <div class="sticky-stage">
+            <div id="camera-stage-outro-1">
+                <div id="phrase-stage-outro-1"></div>
+            </div>
+            <div id="camera-stage-outro-2">
+                <div id="phrase-stage-outro-2"></div>
+                <a href="../contact/contact.html" class="connection-button">Let's Connect</a>
+            </div>
+        </div>
+    </section>
+
+    <div id="terminal-stage" class="about-terminal-stage">
+        <div id="terminal-window" class="terminal-window">
+            <div class="terminal-header">
+                <div class="window-buttons">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="terminal-title">guest@taksh-nahata:~</div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="output-line">Welcome to my grounds! This system has been specifically initialized for you, so do what you must!</div>
+                <div class="output-line text-muted">Type a command below or click any quick-actions to explore and find out more about yours truly!</div>
+                <br>
+            </div>
+            <div class="btn-info">
+                
+            </div>
+            <div class="terminal-actions">
+                <button class="terminal-btn" onmouseenter="showTip('Opens my full-scale background biography page')" onmouseleave="hideTip(this)" onclick="runCommand('about')">cat about_me.txt</button>
+                <button class="terminal-btn" onmouseenter="showTip('Lists my projects')" onmouseleave="hideTip(this)" onclick="runCommand('projects')">ls projects</button>
+                <button class="terminal-btn" onmouseenter="showTip('Displays my skills')" onmouseleave="hideTip(this)" onclick="runCommand('skills')">npm run skills</button>
+                <button class="terminal-btn" onmouseenter="showTip('Shows my contact information')" onmouseleave="hideTip(this)" onclick="runCommand('contact')">cat contact.txt</button>
+                <button class="terminal-btn" onmouseenter="showTip('Clears the terminal')" onmouseleave="hideTip(this)" onclick="runCommand('clear')">clear</button>
+            </div>
+            <div id="terminal-status" class="terminal-status">The terminal is ready. Hover over a command to view details...</div>
+            <div class="terminal-input-row">
+                <span class="prompt">guest@taksh-nahata:~$&nbsp;</span>
+                <input type="text" id="terminal-input" placeholder="Type a command or help for more info..." autocomplete="off">
+            </div>                
+        </div>
+    </div>
     <script src="about.js"></script>
 </body>
 </html>

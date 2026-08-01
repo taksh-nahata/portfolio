@@ -2,8 +2,8 @@
 // ╠═╣├┴┐│ ││ │ │   ╠═╝├─┤│ ┬├┤   ╠═╣│││││││├─┤ │ ││ ││││└─┐
 // ╩ ╩└─┘└─┘└─┘ ┴   ╩  ┴ ┴└─┘└─┘  ╩ ╩┘└┘┴┴ ┴┴ ┴ ┴ ┴└─┘┘└┘└─┘
 
-// SCRIPT FOR ANIMATING THE PHRASE "ABOUT TAKSH NAHATA"
-const aboutText = "ABOUT TAKSH NAHATA"
+// SCRIPT FOR ANIMATING THE PHRASE "ABOUT ME"
+const aboutText = "ABOUT ME"
 
 const aboutHeaderElement = document.getElementById("aboutHeader");
 const aboutWords = aboutText.split(' ');
@@ -24,12 +24,9 @@ const aboutHTML = aboutWords.map((word, wordIndex) => {
 aboutHeaderElement.innerHTML = aboutHTML;
 
 // SCRIPT FOR ANIMATING THE PHRASE "SO... YOU REALLY WANT TO KNOW WHO I AM?"
-const firstPhrase = "SO... YOU REALLY WANT TO KNOW WHO I AM?";
-const secondPhrase = "I MEAN, I GUESS..."
+const firstPhrase = "BEHIND THE CODE";
 const stageContainer = document.getElementById("phrase-stage-about");
-const stageContainerGuess = document.getElementById("phrase-stage-guess");
 const firstPhraseWords = firstPhrase.split(' ');
-const secondPhraseWords = secondPhrase.split(' ');
 
 const firstPhraseHTML = firstPhraseWords.map((word, index) => {
     const startPercent = 12 + (index * 7);
@@ -38,14 +35,6 @@ const firstPhraseHTML = firstPhraseWords.map((word, index) => {
 }).join(' ');
 
 stageContainer.innerHTML = firstPhraseHTML;
-
-const secondPhraseHTML = secondPhraseWords.map((word, index) => {
-    const startPercent = 12 + (index * 10);
-    const endPercent = startPercent + 10;
-    return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
-}).join(' ');
-
-stageContainerGuess.innerHTML = secondPhraseHTML;
 
 // SCRIPT FOR HANDLING PHOTO GRID ANIMATION AND MEDIA FILES
 const rawFiles = [
@@ -317,7 +306,6 @@ if (timelineItems.length > 0) {
     timelineItems.forEach(item => itemObserver.observe(item));
 }
 
-// 3. ZOOM-OUT 90° ROTATION FINALE SCRIPT
 const mainTimeline = document.getElementById('main-timeline');
 const act7Wrapper = document.getElementById('act-7-wrapper');
 const finaleSpace = document.getElementById('finale-scroll-space');
@@ -326,58 +314,48 @@ let cachedTimelineHeight = 0;
 
 function handleZoomOutRotation() {
     if (!mainTimeline || !act7Wrapper || !finaleSpace) return;
-    
-    // Cache the initial height so the progress calculation is immune to dynamic layout changes!
+
     if (cachedTimelineHeight === 0) {
         cachedTimelineHeight = mainTimeline.offsetHeight;
+        act7Wrapper.style.minHeight = `${act7Wrapper.offsetHeight}px`;
     }
     
     const act7Rect = act7Wrapper.getBoundingClientRect();
     const windowH = window.innerHeight;
-    
-    // The scroll position where the user reaches the bottom of the timeline
     const startFinaleTop = windowH - cachedTimelineHeight;
-    
-    // How far have we scrolled past this point?
     const pixelsPastTimeline = startFinaleTop - act7Rect.top;
-    
-    // Total distance of the finale is 300vh
-    const scrollDistance = windowH * 3;
-    
-    let progress = pixelsPastTimeline / scrollDistance;
+    const rotationDistance = windowH*3;
+    let progress = pixelsPastTimeline / rotationDistance;
     progress = Math.max(0, Math.min(1, progress));
-    
-    // Update cached height ONLY when safely at progress 0, 
-    // to adapt to image loading but ignore finale layout shifts.
+
+    const totalFinaleDistance = finaleSpace.offsetHeight;
+    let fadeProgress = pixelsPastTimeline / totalFinaleDistance;
+
     if (progress === 0 && !mainTimeline.classList.contains('rotated-finale')) {
         cachedTimelineHeight = mainTimeline.offsetHeight;
     }
-    
-    // 1. Rotate -90deg smoothly
+
+    const anchorPoint = 1750;
+    mainTimeline.style.transformOrigin = `50% ${anchorPoint}px`;
     const angle = progress * -90;
-    
-    // Now we can safely read the dynamic expanding height for visual transforms,
-    // because it doesn't feed back into the progress calculation!
-    const actualHeight = mainTimeline.offsetHeight;
-    
-    // 2. Scale down so the entirely expanded timeline STILL fits horizontally!
-    const targetScale = (window.innerWidth * 0.85) / actualHeight;
+    const targetScale = 0.32;
     const minScale = Math.min(1, targetScale);
     const scale = 1 + (minScale - 1) * progress;
-    
-    // 3. Keep the timeline perfectly centered vertically on screen!
-    // The top of mainTimeline is exactly act7Rect.top.
-    const currentNaturalCenterY = act7Rect.top + (actualHeight / 2);
+    const currentNaturalCenterY = act7Rect.top + anchorPoint;
     const targetCenterY = windowH / 2;
     
     const requiredTranslateY = targetCenterY - currentNaturalCenterY;
-    
-    // Linear translation perfectly counters linear native scrolling
     const translateY = progress * requiredTranslateY;
     
     mainTimeline.style.transform = `translateY(${translateY}px) rotate(${angle}deg) scale(${scale})`;
     mainTimeline.style.setProperty('--finale-progress', progress);
-    
+
+    if (fadeProgress > 0.9) {
+        mainTimeline.style.opacity = Math.max(0, 1 - ((fadeProgress - 0.9) / 0.1));
+    } else {
+        mainTimeline.style.opacity = 1;
+    }
+
     if (progress > 0.05) {
         mainTimeline.classList.add('rotated-finale');
     } else {
@@ -385,3 +363,103 @@ function handleZoomOutRotation() {
     }
 }
 window.addEventListener('scroll', handleZoomOutRotation, { passive: true });
+
+// SCRIPT FOR ANIMATING THE PHRASE "THAT'S MY STORY. LET'S BUILD SOMETHING TOGETHER."
+const outroFirstPhrase = "THAT'S MY STORY";
+const outroSecondPhrase = "LET'S BUILD SOMETHING TOGETHER";
+const stageContainer1 = document.getElementById("phrase-stage-outro-1");
+const stageContainer2 = document.getElementById("phrase-stage-outro-2");
+
+if (stageContainer1) {
+    const firstPhraseWordsOutro = outroFirstPhrase.split(' ');
+    stageContainer1.innerHTML = firstPhraseWordsOutro.map((word, index) => {
+        const startPercent = 10 + (index * 8);
+        const endPercent = startPercent + 8;
+        return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
+    }).join(' ');
+}
+
+if (stageContainer2) {
+    const secondPhraseWordsOutro = outroSecondPhrase.split(' ');
+    stageContainer2.innerHTML = secondPhraseWordsOutro.map((word, index) => {
+        const startPercent = 50 + (index * 6);
+        const endPercent = startPercent + 6;
+        return `<span class="smash-word" style="animation-range: ${startPercent}% ${endPercent}%;">${word}</span>`;
+    }).join(' ');
+}
+
+// SCRIPT FOR HANDLING TERMINAL COMMANDS AND BUTTONS
+const terminalInput = document.getElementById("terminal-input");
+const terminalBody = document.getElementById("terminal-body");
+const routes = {
+    home: "../index.html",
+    about: "about.html",
+    projects: "../projects.html",
+    skills: "../skills.html",
+    contact: "../xcontact.html"
+};
+
+terminalInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        const inputVal = terminalInput.value.trim().toLowerCase();
+        runCommand(inputVal);
+        terminalInput.value = "";
+    }
+});
+
+function runCommand(commandText) {
+    if (!commandText) return;
+
+    const commandLog = document.createElement("div");
+    commandLog.innerHTML = `<span class="prompt">>guest@taksh-nahata:~$&nbsp;</span>${commandText}`;
+    terminalBody.appendChild(commandLog);
+    const statusLog = document.createElement("div");
+    statusLog.style.paddingLeft = "15px";
+
+    if (commandText === "clear") {
+        terminalBody.innerHTML = "";
+        return;
+    }
+
+    if (routes[commandText]) {
+        statusLog.innerHTML = `
+            <span class="text-cyan">Executing secure handshake...</span><br>
+            <span class="text-cyan">Access granted. Launching environmental matrix...</span>
+            <span class="text-cyan">[ REDIRECTING TO /${commandText} ]</span>
+        `;
+        terminalBody.appendChild(statusLog);
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+
+        setTimeout(() => {
+            window.location.href = routes[commandText];
+        }, 900);
+    } else if (commandText === "help") {
+        statusLog.innerHTML = `Available launch routes:<br>
+        - <span class="text-accent">home</span> - Return to the main page<br>
+        - <span class="text-accent">about</span> - Learn who I truly am<br>
+        - <span class="text-accent">projects</span> - See my current builds and ventures, as well as what I'm working on right now!<br>
+        - <span class="text-accent">skills</span> - Output my technical stack & systems architecture<br>
+        - <span class="text-accent">contact</span> - Get in touch with me<br>
+        - <span class="text-accent">clear</span> - Clear the terminal<br>`;
+        terminalBody.appendChild(statusLog);
+    } else {
+        statusLog.innerHTML = `command not found: <span class="text-accent">${commandText}</span>. Type <span class="text-accent">help</span> for a list of available commands.`;
+        terminalBody.appendChild(statusLog);
+    }
+
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+}
+
+const statusElement = document.getElementById("terminal-status");
+
+function showTip(tipText) {
+    statusElement.textContent = `> ${tipText}`;
+    statusElement.style.color = "#00f0ff";
+    statusElement.style.textShadow = "0 0 10px rgba(0, 240, 255, 0.4)";
+}
+
+function hideTip() {
+    statusElement.textContent = "The terminal is ready. Hover over a command to view details...";
+    statusElement.style.color = "#666";
+    statusElement.style.textShadow = "none";
+}
