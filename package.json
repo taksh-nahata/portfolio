@@ -2,7 +2,6 @@
   "name": "portfolio",
   "version": "1.0.0",
   "description": "Portfolio with Neon Postgres",
-  "main": "script.js",
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0"
   }
