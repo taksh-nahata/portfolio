@@ -1,6 +1,6 @@
-import {neon} from '@neondatabase/serverless';
+const { neon } = require('@neondatabase/serverless');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -8,14 +8,29 @@ export default async function handler(req, res) {
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST.' });
 
-    const { name, email, subject, message } = req.body || {};
+    let body = req.body;
+    if (typeof body === 'string') {
+        try {
+            body = JSON.parse(body);
+        } catch (e) {
+            return res.status(400).json({ error: 'Invalid JSON body.' });
+        }
+    }
+
+    const { name, email, subject, message } = body || {};
 
     if (!name || !email || !subject || !message) {
         return res.status(400).json({ error: 'All fields (name, email, subject, message) are required.' });
     }
 
+    const dbUrl = process.env.DATABASE_URL;
+    if (!dbUrl) {
+        console.error('DATABASE_URL environment variable is missing in Vercel settings!');
+        return res.status(500).json({ error: 'DATABASE_URL is not set in Vercel Environment Variables.' });
+    }
+
     try {
-        const sql = neon(process.env.DATABASE_URL);
+        const sql = neon(dbUrl);
 
         await sql`
             CREATE TABLE IF NOT EXISTS messages (
@@ -36,7 +51,7 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ success: true, id: result[0].id });
     } catch (error) {
-        console.error('Neon error:', error);
-        return res.status(500).json({ error: 'Submission failed.' });
+        console.error('Neon database error:', error);
+        return res.status(500).json({ error: error.message || 'Database submission failed.' });
     }
-}
+};
