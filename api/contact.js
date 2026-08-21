@@ -2,11 +2,21 @@ const { neon } = require('@neondatabase/serverless');
 
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    if (req.method === 'OPTIONS') return res.status(200).end();
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
+    // Health check if you open the URL in your browser
+    if (req.method === 'GET') {
+        return res.status(200).json({ status: 'API is online and ready for POST requests!' });
+    }
+
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+    }
 
     let body = req.body;
     if (typeof body === 'string') {
@@ -26,7 +36,7 @@ module.exports = async function handler(req, res) {
     const dbUrl = process.env.DATABASE_URL;
     if (!dbUrl) {
         console.error('DATABASE_URL environment variable is missing in Vercel settings!');
-        return res.status(500).json({ error: 'DATABASE_URL is not set in Vercel Environment Variables.' });
+        return res.status(500).json({ error: 'DATABASE_URL environment variable is not configured in Vercel settings.' });
     }
 
     try {
@@ -54,4 +64,4 @@ module.exports = async function handler(req, res) {
         console.error('Neon database error:', error);
         return res.status(500).json({ error: error.message || 'Database submission failed.' });
     }
-};
+};fi
