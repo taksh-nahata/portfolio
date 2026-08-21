@@ -64,4 +64,4 @@ module.exports = async function handler(req, res) {
         console.error('Neon database error:', error);
         return res.status(500).json({ error: error.message || 'Database submission failed.' });
     }
-};fi
+};
