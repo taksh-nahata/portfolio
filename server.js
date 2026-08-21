@@ -1,7 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const myDatabase = require('better-sqlite3');
-const path = require('path');
+const { neon } = require('@neondatabase/serverless');
 
 const myApp = express();
 const PORT = process.env.PORT || 3000;
@@ -9,19 +9,28 @@ const PORT = process.env.PORT || 3000;
 myApp.use(cors());
 myApp.use(express.json());
 
-const db = new myDatabase(path.join(__dirname, 'portfolio.db'));
-db.exec(`
-    CREATE TABLE IF NOT EXISTS messages (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL,
-        subject TEXT NOT NULL,
-        message TEXT NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-`);
+const sql = neon(process.env.DATABASE_URL);
 
-myApp.post('/api/contact', (req, res) => {
+async function initDB() {
+    try {
+        await sql`
+        CREATE TABLE IF NOT EXISTS messages (
+            id SERIAL PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            subject TEXT NOT NULL,
+            message TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `;
+    console.log('Connected to Neon PostgreSQL database');
+    } catch (error) {
+        console.error('Connection error:', error);
+    }
+}
+initDB();
+
+myApp.post('/api/contact', async (req, res) => {
     const { name, email, subject, message } = req.body;
 
     if (!name || !email || !subject || !message) {
@@ -32,18 +41,19 @@ myApp.post('/api/contact', (req, res) => {
     }
 
     try {
-        const stmt = db.prepare(`
+        const result = await sql`
             INSERT INTO messages (name, email, subject, message)
-            VALUES (?, ?, ?, ?)
-        `);
-        const result = stmt.run(name, email, subject, message);
-
-        console.log(`[DB] New message inserted with ID: ${result.lastInsertRowid} from ${name} (${email})`);
+            VALUES (${name}, ${email}, ${subject}, ${message})
+            RETURNING id
+        `;
+        
+        const newId = result[0].id;
+        console.log(`[Neon DB] New message inserted with ID: ${newId} from ${name} (${email})`);
 
         return res.status(201).json({
             success: true,
             message: `I got your message! I will get back to you as soon as possible. If I dont respond within 48 hours, please feel free to reach out to me again or directly email me using my given email.`,
-            id: result.lastInsertRowid
+            id: newId
         });
     } catch (error) {
         console.error(`[DB] ERROR`, error);
@@ -63,7 +73,7 @@ app.get('/api/messages', (req, res) => {
             messages: rows 
         });
     } catch (error) {
-        return. res.status(500).json({
+        return res.status(500).json({
             success: false,
             error: "Mb. Couldn't retrieve your messages"
         });
@@ -73,4 +83,6 @@ app.get('/api/messages', (req, res) => {
 app.listen(PORT, () => {
     console.log(`=========================================`);
     console.log(`Contact page backend is running on port http://localhost:${PORT}`);
-    console.log(``)
+    console.log(`SQLite DB is active at portfolio.db`);
+    console.log(`=========================================`);
+});

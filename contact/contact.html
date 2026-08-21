@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <section class="act-wrapper" id="act-0-wrapper" style="height: 600vh;">
+    <section class="act-wrapper" id="act0Wrapper" style="height: 150vh;">
         <div class="sticky-stage">
             <div id="contact-container">
                 <h1 class="brand-name contact" id="contactHeader"></h1>
@@ -20,17 +20,81 @@
         </div>
     </section>
 
-    <section class="act-wrapper" id="act-1-wrapper" style="height: 600vh;">
-        <div class="sticky-stage">
-            <div id="contact-container-2">
-                <h1 class="brand-name contact" id="contactHeader-2"></h1>
-                <div class="arrow-wrapper contact">
-                    <span class="scroll-down-arrow"></span>
+    <section class="act-wrapper" id="act1Wrapper" style="height: 400vh;">
+        <div class="sticky-stage" id="contactPageSticky">
+            <div class="contactCardBoxes" id="email">
+                <div class="entireGridBoxContainer">
+                    <div class="gridCard emailCard">
+                        <div class="headerPhrase" id="emailHeaderPhrase"></div>
+                        <div class="content">
+                            <span class="cardLabel">EMAIL</span>
+                            <a href="mailto:taksh.nahata37@gmail.com" class="bolder">taksh.nahata37@gmail.com</a>
+                            <button class="copyButton" onclick="copyToClipboard('taksh.nahata37@gmail.com', this)">Copy My Email</button>
+                        </div>
+                    </div>
+
+                    <div class="gridCard githubCard">
+                        <div class="headerPhrase" id="githubHeaderPhrase"></div>
+                        <div class="content">
+                            <span class="cardLabel">GITHUB</span>
+                            <a href="https://github.com/taksh-nahata" target="_blank" class="bolder">github.com/taksh-nahata</a>
+                            <button class="copyButton" onclick="copyToClipboard('https://github.com/taksh-nahata', this)">Copy My GitHub</button>
+                        </div>
+                    </div>
+
+                    <div class="gridCard linkedinCard">
+                        <div class="headerPhrase" id="linkedinHeaderPhrase"></div>
+                        <div class="content">
+                            <span class="cardLabel">LINKEDIN</span>
+                            <a href="https://www.linkedin.com/in/taksh-nahata/" target="_blank" class="bolder">linkedin.com/in/taksh-nahata</a>
+                            <button class="copyButton" onclick="copyToClipboard('https://www.linkedin.com/in/taksh-nahata/', this)">Copy My LinkedIn</button>
+                        </div>
+                    </div>
+
+                    <div class="gridCard instaCard">
+                        <div class="headerPhrase" id="instaHeaderPhrase"></div>
+                        <div class="content">
+                            <span class="cardLabel">INSTAGRAM</span>
+                            <a href="https://www.instagram.com/taksh_nahata/" target="_blank" class="bolder">instagram.com/taksh_nahata</a>
+                            <button class="copyButton" onclick="copyToClipboard('https://www.instagram.com/taksh.nahata/', this)">Copy My Instagram</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <section class="act-wrapper" id="act2Wrapper" style="height: 200vh;">
+        <div class="sticky-stage">
+            <div class="myAvailability">
+                <h2 class="availabilityHeader">MY CURRENT AVAILABILITY</h2>
+                <div class="availabilityBadge">
+                    <span class="statusDot"></span>
+                    <span>I'm current open for Software Engineering or Business internships, summer programs, or research! I am also open to any startups that align with my interests. If you have anything else you want to share, feel free to message me or fill out the form below.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="act-wrapper" id="act3Wrapper" style="height: 200vh;">
+        <div class="sticky-stage">
+            <div class="contactFormStage">
+                <div class="contactFormCard">
+                    <h2>SEND ME A DIRECT MESSAGE USING THIS FORM</h2>
+                    <p class="formSubtitle">Responses will be filled directly in my backend SQLite database!</p>
+                    <form id="contactForm">
+                        <div class="formGroup"><input type="text" id="formName" placeholder="Your Name" required></div>
+                        <div class="formGroup"><input type="email" id="formEmail" placeholder="Your Email" required></div>
+                        <div class="formGroup"><input type="text" id="formSubject" placeholder="Subject" required></div>
+                        <div class="formGroup"><textarea id="formMessage" rows="4" placeholder="Your Message..." required></textarea></div>
+                        <button type="submit" class="formSubmitButton" id="formSubmitButton">Send Message</button>
+                        <div id="formStatus" class="formStatus"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <div id="terminal-stage" class="about-terminal-stage">
         <div id="terminal-window" class="terminal-window">
             <div class="terminal-header">

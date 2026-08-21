@@ -1,0 +1,313 @@
+body {
+    timeline-scope: --contact-act0-timeline, --contact-act1-timeline, --contact-act2-timeline, --contact-act3-timeline;
+}
+
+#act0Wrapper { view-timeline-name: --contact-act0-timeline; }
+#act1Wrapper { view-timeline-name: --contact-act1-timeline; }
+#act2Wrapper { view-timeline-name: --contact-act2-timeline; }
+#act3Wrapper { view-timeline-name: --contact-act3-timeline; }
+
+.act-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.sticky-stage {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vwfinish;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.brand-name.contact {
+    animation-timeline: --contact-act0-timeline;
+    animation-range: 0% 100%;
+}
+.arrow-wrapper.contact {
+    animation-timeline: --contact-act0-timeline;
+    animation-range: 0% 50%;
+}
+
+#contact-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+}
+
+.entireGridBoxContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 950px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    perspective: 1000px;
+}
+
+.gridCard {
+    background: rgba(12, 12, 12, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    pointer-events: auto;
+}
+
+.headerPhrase {
+    font-family: monospace;
+    font-size: 1.1rem;
+    color: #ffffff;
+    min-height: 1.5rem;
+}
+
+.headerPhrase .smash-word {
+    animation-timeline: --contact-act1-timeline !important;
+    font-size: 1.1rem;
+    margin: 0 4px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.cardLabel {
+    font-size: 0.8rem;
+    font-family: monospace;
+    color: #666;
+    letter-spacing: 2px;
+}
+
+.bolder {
+    font-family: monospace;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #00f0ff;
+    text-decoration: none;
+    text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+    transition: all 0.2s ease;
+    word-break: break-all;
+    text-align: center;
+}
+
+.bolder:hover {
+    color: #ffffff;
+    text-shadow: 0 0 25px rgba(214, 27, 70, 0.8);
+}
+
+.copyButton {
+    background-color: #1a1a1a;
+    color: #d61b46;
+    border: 1px solid #d61b46;
+    padding: 8px 18px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copyButton:hover {
+    background-color: #d61b46;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(214, 27, 70, 0.5);
+}
+
+.emailCard {
+    animation: emailCardLand linear forwards;
+    animation-timeline: --contact-act1-timeline;
+}
+
+.githubCard {
+    animation: githubCardLand linear forwards;
+    animation-timeline: --contact-act1-timeline;
+}
+
+.linkedinCard {
+    animation: linkedinCardLand linear forwards;
+    animation-timeline: --contact-act1-timeline;
+}
+
+.instaCard {
+    animation: instaCardLand linear forwards;
+    animation-timeline: --contact-act1-timeline;
+}
+
+.myAvailability {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 800px;
+    width: 90%;
+    text-align: center;
+    opacity: 0;
+    animation: availabilityReveal linear forwards;
+    animation-timeline: --contact-act2-timeline;
+}
+
+.availabilityHeader {
+    font-family: monospace;
+    font-size: 2.2rem;
+    color: #ffffff;
+}
+
+.availabilityBadge {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(12, 12, 12, 0.9);
+    border: 1px solid rgba(39, 201, 63, 0.4);
+    padding: 20px 30px;
+    border-radius: 12px;
+    font-family: monospace;
+    font-size: 1rem;
+    color: #27c93f;
+    box-shadow: 0 0 20px rgba(39, 201, 63, 0.2);
+}
+
+.statusDot {
+    width: 12px;
+    height: 12px;
+    background-color: #27c93f;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #27c93f;
+    flex-shrink: 0;
+}
+
+.contactFormStage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 550px;
+    opacity: 0;
+    pointer-events: auto;
+    animation: formReveal linear forwards;
+    animation-timeline: --contact-act3-timeline;
+}
+
+.contactFormCard {
+    background: rgba(12, 12, 12, 0.9);
+    border: 1px solid rgba(214, 27, 70, 0.3);
+    border-radius: 12px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+    font-family: monospace;
+}
+
+.contactFormCard h2 {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.formSubtitle {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup input, .formGroup textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #ffffff;
+    font-family: monospace;
+    font-size: 0.95rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.formGroup input:focus, .formGroup textarea:focus {
+    border-color: #00f0ff;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.formSubmitButton {
+    background-color: #d61b46;
+    width: 100%;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.formSubmitButton:hover {
+    background-color: #ff1e56;
+    box-shadow: 0 0 20px rgba(255, 30, 86, 0.5);
+}
+
+.formStatus {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    min-height: 1.2rem;
+}
+
+/* ANIMATIONS */
+@keyframes emailCardLand {
+    0% { transform: translateY(60px) scale(2); opacity: 0; filter: blur(8px); }
+    15%, 100% { transform: translateY(0) scale(1); filter: blur(0); border-color: rgba(0, 240, 255, 0.4); opacity: 1; }
+}
+
+@keyframes githubCardLand {
+    0%, 20% { transform: translateY(60px) scale(2); opacity: 0; filter: blur(8px); }
+    35%, 100% { transform: translateY(0) scale(1); filter: blur(0); border-color: rgba(214, 27, 70, 0.4); opacity: 1; }
+}
+
+@keyframes linkedinCardLand {
+    0%, 45% { transform: translateY(60px) scale(2); opacity: 0; filter: blur(8px); }
+    60%, 100% { transform: translateY(0) scale(1); filter: blur(0); border-color: rgba(39, 201, 63, 0.4); opacity: 1; }
+}
+
+@keyframes instaCardLand {
+    0%, 70% { transform: translateY(60px) scale(2); opacity: 0; filter: blur(8px); }
+    85%, 100% { transform: translateY(0) scale(1); filter: blur(0); border-color: rgba(255, 189, 46, 0.4); opacity: 1; }
+}
+
+@keyframes availabilityReveal {
+    0%, 15% { transform: translate(-50%, -40%); opacity: 0; }
+    30%, 85% { transform: translate(-50%, -50%); opacity: 1; }
+    95%, 100% { transform: translate(-50%, -60%); opacity: 0; }
+}
+
+@keyframes formReveal {
+    0%, 15% { transform: translate(-50%, -40%); opacity: 0; }
+    30%, 85% { transform: translate(-50%, -50%); opacity: 1; }
+    95%, 100% { transform: translate(-50%, -60%); opacity: 0; }
+}

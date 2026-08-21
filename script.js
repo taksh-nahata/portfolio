@@ -114,7 +114,7 @@ const routes = {
     about: "about/about.html",
     projects: "projects.html",
     skills: "skills.html",
-    contact: "contact.html"
+    contact: "contact/contact.html"
 };
 
 terminalInput.addEventListener("keydown", (event) => {
