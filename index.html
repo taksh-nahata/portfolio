@@ -7,17 +7,21 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- main hero part where my name pops in using js array map -->
     <div id="intro-container">
         <h1 class="brand-name" id="logo"></h1>
+        <!-- lil bouncy arrow so people know to scroll down -->
         <div class="arrow-wrapper">
             <span class="scroll-down-arrow"></span>
         </div>
     </div>
     
+    <!-- 3d zoom effect for the words. mostly just css view timeline stuff -->
     <div id="camera-stage">
         <div id="phrase-stage"></div>
     </div>
 
+    <!-- main terminal thing that controls navigation around the site -->
     <div id="terminal-stage">
         <div id="terminal-window" class="terminal-window">
             <div class="terminal-header">
@@ -38,8 +42,6 @@
             </div>
             <div class="terminal-actions">
                 <button class="terminal-btn" onmouseenter="showTip('Opens my full-scale background biography page')" onmouseleave="hideTip(this)" onclick="runCommand('about')">cat about_me.txt</button>
-                <button class="terminal-btn" onmouseenter="showTip('Lists my projects')" onmouseleave="hideTip(this)" onclick="runCommand('projects')">ls projects</button>
-                <button class="terminal-btn" onmouseenter="showTip('Displays my skills')" onmouseleave="hideTip(this)" onclick="runCommand('skills')">npm run skills</button>
                 <button class="terminal-btn" onmouseenter="showTip('Shows my contact information')" onmouseleave="hideTip(this)" onclick="runCommand('contact')">cat contact.txt</button>
                 <button class="terminal-btn" onmouseenter="showTip('Clears the terminal')" onmouseleave="hideTip(this)" onclick="runCommand('clear')">clear</button>
             </div>

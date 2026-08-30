@@ -394,9 +394,7 @@ const terminalBody = document.getElementById("terminal-body");
 const routes = {
     home: "../index.html",
     about: "about.html",
-    projects: "../projects.html",
-    skills: "../skills.html",
-    contact: "../xcontact.html"
+    contact: "../contact/contact.html"
 };
 
 terminalInput.addEventListener("keydown", (event) => {
@@ -437,8 +435,6 @@ function runCommand(commandText) {
         statusLog.innerHTML = `Available launch routes:<br>
         - <span class="text-accent">home</span> - Return to the main page<br>
         - <span class="text-accent">about</span> - Learn who I truly am<br>
-        - <span class="text-accent">projects</span> - See my current builds and ventures, as well as what I'm working on right now!<br>
-        - <span class="text-accent">skills</span> - Output my technical stack & systems architecture<br>
         - <span class="text-accent">contact</span> - Get in touch with me<br>
         - <span class="text-accent">clear</span> - Clear the terminal<br>`;
         terminalBody.appendChild(statusLog);

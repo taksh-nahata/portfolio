@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="about.css">
 </head>
 <body>
-
+    <!-- About Me Header standard just like all the other pages -->
     <section class="act-wrapper" id="act-0-wrapper" style="height: 600vh;">
         <div class="sticky-stage">
             <div id="about-container">
@@ -20,6 +20,7 @@
         </div>
     </section>
 
+    <!-- Simple text to begin about me page. text is like "Behind the code" -->
     <section class="act-wrapper" id="act-1-wrapper" style="height: 600vh;">
         <div class="sticky-stage">
             <div id="camera-stage-about">
@@ -27,7 +28,8 @@
             </div>
         </div>
     </section>
-
+    
+    <!-- photo grid as well as "HI, I'M TAKSH" -->
     <section class="act-wrapper" id="act-4-wrapper" style="height: 1000vh;">
         <div class="sticky-stage">
             <div id="photo-pour-stage">
@@ -41,6 +43,7 @@
         </div>
     </section>
 
+    <!-- basically a search bar and then like an ai overview of my name's meaning-->
     <section class="act-wrapper" id="act-5-wrapper" style="height: 800vh;">
         <div class="sticky-stage">
             <div id="ai-search-stage">
@@ -77,6 +80,7 @@
         </div>
     </section>
 
+    <!-- introduction that leads into timeline -->
     <section class="act-wrapper" id="act-6-wrapper" style="height: 500vh;">
         <div class="sticky-stage">
             <div id="camera-stage-bridge">
@@ -84,7 +88,8 @@
             </div>
         </div>
     </section>
-
+    
+    <!-- timeline with pictures. -->
     <section class="act-wrapper" id="act-7-wrapper" style="position: relative;">
             <section class="timeline-section" id="timeline">
                 <div class="timeline-container" id="main-timeline">
@@ -143,7 +148,7 @@
                             <p>Bought my first Arduino kit through PodPi. Learned to code and build hardware, peaking my interest in physical engineering. I even built a working mini vending machine that dispensed snacks.</p>
                         </div>
                         <div class="timeline-image">
-                            <img src="https://res.cloudinary.com/gxkyclnt/image/upload/v1784755916/c49a7602-a49f-47db-af39-8adabb127763_1_fl5owj.jpg" alt="Physical Realm">    
+                            <img src="" alt="Physical Realm">    
                             <svg class="card-border-svg" viewBox="0 0 400 220" preserveAspectRatio="none">
                                 <path class="wavy-card-path" d="M 20,20 Q 200,5 380,25 Q 395,110 375,195 Q 200,215 25,190 Q 5,100 20,20" fill="none" stroke="#ffffff" stroke-width="3.5" />
                             </svg>
@@ -240,6 +245,7 @@
         </div>
     </section>
 
+    <!-- Standard terminal included at the end of each page -->
     <div id="terminal-stage" class="about-terminal-stage">
         <div id="terminal-window" class="terminal-window">
             <div class="terminal-header">
@@ -260,8 +266,6 @@
             </div>
             <div class="terminal-actions">
                 <button class="terminal-btn" onmouseenter="showTip('Opens my full-scale background biography page')" onmouseleave="hideTip(this)" onclick="runCommand('about')">cat about_me.txt</button>
-                <button class="terminal-btn" onmouseenter="showTip('Lists my projects')" onmouseleave="hideTip(this)" onclick="runCommand('projects')">ls projects</button>
-                <button class="terminal-btn" onmouseenter="showTip('Displays my skills')" onmouseleave="hideTip(this)" onclick="runCommand('skills')">npm run skills</button>
                 <button class="terminal-btn" onmouseenter="showTip('Shows my contact information')" onmouseleave="hideTip(this)" onclick="runCommand('contact')">cat contact.txt</button>
                 <button class="terminal-btn" onmouseenter="showTip('Clears the terminal')" onmouseleave="hideTip(this)" onclick="runCommand('clear')">clear</button>
             </div>

@@ -50,13 +50,14 @@ const phraseHTML = phraseWords.map((word, index) => {
 stageContainer.innerHTML = phraseHTML;
 
 
-// SCRIPT FOR PLAYING INTRO AUDIO AND HANDLING SCROLL FADE OUT
+// script to play the intro audio and fade it out on scroll
+// basically makes the music fade out chill when u scroll down
 const introAudio = new Audio('intro.mp3');
 introAudio.volume = 0.5;
 
 function playIntroAudio() {
     introAudio.play().then(() => {
-        console.log('Intro audio started playing.');
+        console.log('intro audio started playing.');
     }).catch((error) => {
         console.error('Error playing intro audio:', error);
         document.addEventListener('click', unlockAudio);
@@ -112,8 +113,6 @@ const terminalBody = document.getElementById("terminal-body");
 const routes = {
     home: "index.html",
     about: "about/about.html",
-    projects: "projects.html",
-    skills: "skills.html",
     contact: "contact/contact.html"
 };
 
@@ -155,8 +154,6 @@ function runCommand(commandText) {
         statusLog.innerHTML = `Available launch routes:<br>
         - <span class="text-accent">home</span> - Return to the main page<br>
         - <span class="text-accent">about</span> - Learn who I truly am<br>
-        - <span class="text-accent">projects</span> - See my current builds and ventures, as well as what I'm working on right now!<br>
-        - <span class="text-accent">skills</span> - Output my technical stack & systems architecture<br>
         - <span class="text-accent">contact</span> - Get in touch with me<br>
         - <span class="text-accent">clear</span> - Clear the terminal<br>`;
         terminalBody.appendChild(statusLog);

@@ -12,11 +12,12 @@ body {
     width: 100%;
 }
 
+/* The sticky stage keeps the content locked in the viewport while the wrappers scroll */
 .sticky-stage {
     position: sticky;
     top: 0;
     left: 0;
-    width: 100vwfinish;
+    width: 100vw;
     height: 100vh;
     overflow: hidden;
 }
@@ -196,7 +197,7 @@ body {
     flex-shrink: 0;
 }
 
-.contactFormStage {
+.message-stage-area {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -209,7 +210,7 @@ body {
     animation-timeline: --contact-act3-timeline;
 }
 
-.contactFormCard {
+.dm-card-box {
     background: rgba(12, 12, 12, 0.9);
     border: 1px solid rgba(214, 27, 70, 0.3);
     border-radius: 12px;
@@ -220,23 +221,23 @@ body {
     font-family: monospace;
 }
 
-.contactFormCard h2 {
+.dm-card-box h2 {
     font-size: 1.4rem;
     color: #ffffff;
     margin-bottom: 5px;
 }
 
-.formSubtitle {
+.form-desc-txt {
     font-size: 0.85rem;
     color: #888;
     margin-bottom: 20px;
 }
 
-.formGroup {
+.input-wrapper-thing {
     margin-bottom: 16px;
 }
 
-.formGroup input, .formGroup textarea {
+.input-wrapper-thing input, .input-wrapper-thing textarea {
     width: 100%;
     padding: 12px 15px;
     background: #181818;
@@ -249,12 +250,12 @@ body {
     box-sizing: border-box;
 }
 
-.formGroup input:focus, .formGroup textarea:focus {
+.input-wrapper-thing input:focus, .input-wrapper-thing textarea:focus {
     border-color: #00f0ff;
     box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
 }
 
-.formSubmitButton {
+.send-it-btn {
     background-color: #d61b46;
     width: 100%;
     color: #ffffff;
@@ -268,7 +269,7 @@ body {
     transition: background-color 0.2s ease;
 }
 
-.formSubmitButton:hover {
+.send-it-btn:hover {
     background-color: #ff1e56;
     box-shadow: 0 0 20px rgba(255, 30, 86, 0.5);
 }

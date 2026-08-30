@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <section class="act-wrapper" id="act0Wrapper" style="height: 150vh;">
+    <section class="act-wrapper" id="act0Wrapper" style="height: 250vh;"> <!-- Contact Header standard just like all the other pages -->
         <div class="sticky-stage">
             <div id="contact-container">
                 <h1 class="brand-name contact" id="contactHeader"></h1>
@@ -20,6 +20,7 @@
         </div>
     </section>
 
+    <!-- Simple 2x2 grid like thing of contact cards with all my socials. includes insta, github, linkedin, and email -->
     <section class="act-wrapper" id="act1Wrapper" style="height: 400vh;">
         <div class="sticky-stage" id="contactPageSticky">
             <div class="contactCardBoxes" id="email">
@@ -64,6 +65,7 @@
         </div>
     </section>
 
+    <!-- Current availability card. Just shows like my current status and what im looking for -->
     <section class="act-wrapper" id="act2Wrapper" style="height: 200vh;">
         <div class="sticky-stage">
             <div class="myAvailability">
@@ -76,25 +78,36 @@
         </div>
     </section>
 
-    <section class="act-wrapper" id="act3Wrapper" style="height: 200vh;">
+    <!-- contact form that actually connects to my neon db backend. html side of it. -->
+    <section class="act-wrapper" id="act3Wrapper" style="height: 400vh;">
         <div class="sticky-stage">
-            <div class="contactFormStage">
-                <div class="contactFormCard">
+            
+            <div class="message-stage-area">
+                <div class="dm-card-box">
+                    
+                    <!-- sends stuff to the serverless function -->
                     <h2>SEND ME A DIRECT MESSAGE USING THIS FORM</h2>
-                    <p class="formSubtitle">Responses will be filled directly in my backend SQLite database!</p>
+                    <p class="form-desc-txt">Responses will be filled directly in my backend Neon Postgres database!</p>
+                    
                     <form id="contactForm">
-                        <div class="formGroup"><input type="text" id="formName" placeholder="Your Name" required></div>
-                        <div class="formGroup"><input type="email" id="formEmail" placeholder="Your Email" required></div>
-                        <div class="formGroup"><input type="text" id="formSubject" placeholder="Subject" required></div>
-                        <div class="formGroup"><textarea id="formMessage" rows="4" placeholder="Your Message..." required></textarea></div>
-                        <button type="submit" class="formSubmitButton" id="formSubmitButton">Send Message</button>
+                        <!-- html validation so i dont get spam -->
+                        <div class="input-wrapper-thing"><input type="text" id="formName" placeholder="What should I call you?" minlength="2" maxlength="50" required></div>
+                        <div class="input-wrapper-thing">
+                            <input type="email" id="formEmail" placeholder="Where can I reach back out?" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                        </div>
+                        <div class="input-wrapper-thing"><input type="text" id="formSubject" placeholder="What's this about?" minlength="3" required></div>
+                        <div class="input-wrapper-thing"><textarea id="formMessage" rows="4" placeholder="Drop your thoughts here..." minlength="10" required></textarea></div>
+                        
+                        <button type="submit" class="send-it-btn" id="formSubmitButton">Send Message</button>
                         <div id="formStatus" class="formStatus"></div>
                     </form>
                 </div>
             </div>
+
         </div>
     </section>
     
+    <!-- Standard terminal included at the end of each page -->
     <div id="terminal-stage" class="about-terminal-stage">
         <div id="terminal-window" class="terminal-window">
             <div class="terminal-header">
@@ -110,13 +123,9 @@
                 <div class="output-line text-muted">Type a command below or click any quick-actions to explore and find out more about yours truly!</div>
                 <br>
             </div>
-            <div class="btn-info">
-                
-            </div>
+            <div class="btn-info"></div>
             <div class="terminal-actions">
                 <button class="terminal-btn" onmouseenter="showTip('Opens my full-scale background biography page')" onmouseleave="hideTip(this)" onclick="runCommand('about')">cat about_me.txt</button>
-                <button class="terminal-btn" onmouseenter="showTip('Lists my projects')" onmouseleave="hideTip(this)" onclick="runCommand('projects')">ls projects</button>
-                <button class="terminal-btn" onmouseenter="showTip('Displays my skills')" onmouseleave="hideTip(this)" onclick="runCommand('skills')">npm run skills</button>
                 <button class="terminal-btn" onmouseenter="showTip('Shows my contact information')" onmouseleave="hideTip(this)" onclick="runCommand('contact')">cat contact.txt</button>
                 <button class="terminal-btn" onmouseenter="showTip('Clears the terminal')" onmouseleave="hideTip(this)" onclick="runCommand('clear')">clear</button>
             </div>

@@ -2,6 +2,11 @@
    ║ ╦│  │ │├┴┐├─┤│    ╚═╗ │ └┬┘│  ├┤ └─┐
    ╚═╝┴─┘└─┘└─┘┴ ┴┴─┘  ╚═╝ ┴  ┴ ┴─┘└─┘└─┘ */
    
+/* ╔═╗┬  ┌─┐┌┐ ┌─┐┬    ╔═╗┌┬┐┬ ┬┬  ┌─┐┌─┐
+   ║ ╦│  │ │├┴┐├─┤│    ╚═╗ │ └┬┘│  ├┤ └─┐
+   ╚═╝┴─┘└─┘└─┘┴ ┴┴─┘  ╚═╝ ┴  ┴ ┴─┘└─┘└─┘ */
+   
+/* found this font online for the headers */
 @font-face {
     font-family: 'SweetMemories';
     src: url('about/SuperChildish-1jYoL.ttf') format('truetype');
@@ -9,6 +14,7 @@
     font-style: normal;
 }
 
+/* getting rid of those annoying ass scrollbars */
 body {
     margin: 0;
     padding: 0;
@@ -17,6 +23,7 @@ body {
     background-color: #0a0a0a;
 }
 
+/* huge container so i have enough room to scroll (700vh) */
 #intro-container {
     position: relative;
     height: 700vh;
