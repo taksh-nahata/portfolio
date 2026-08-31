@@ -32,4 +32,4 @@ If you want to clone this and run it yourself:
 * `/api/contact.js` - Vercel Serverless Function that securely pushes form submissions into my Neon database.
 
 ## Screenshots
-![Home Page Gif](media\homePage.gif)!
+![Home Page Gif](media/homePage.gif)
