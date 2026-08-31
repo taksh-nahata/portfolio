@@ -13,7 +13,7 @@ Most personal portfolios I've seen online are pretty boring, standard templates.
 2. You will see an intro animation. Scroll down until you hit the terminal.
 3. Click the terminal input and type `help` to see a list of commands.
 4. Type `about` to navigate to my background page.
-5. Type `contact` to visit the database-backed messaging form.
+5. Type `contact` to visit the messaging form.
 
 P.S. You can click the buttons on the terminal to navigate as well if you don't want to type out the command!
 
